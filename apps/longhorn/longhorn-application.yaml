@@ -1,0 +1,66 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn
+  namespace: argocd
+spec:
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+  project: default
+  sources:
+    - chart: longhorn
+      repoURL: https://charts.longhorn.io/
+      targetRevision: v1.12.0
+      helm:
+        releaseName: longhorn
+        valuesObject:
+          preUpgradeChecker:
+            # Disable the Helm pre-upgrade hook when Longhorn is managed by ArgoCD
+            jobEnabled: false
+          # Default settings
+          defaultSettings:
+            # Number of replicas for each volume
+            defaultReplicaCount: 3
+            # Backup target (S3 example)
+            backupTarget: "s3://longhorn-backups@us-east-1/"
+            backupTargetCredentialSecret: longhorn-backup-secret
+            # Storage reservation per node (percentage)
+            storageMinimalAvailablePercentage: 15
+            # Upgrade checker
+            upgradeChecker: false
+            # Guaranteed instance manager CPU
+            guaranteedInstanceManagerCPU: 12
+            # Auto-delete workload pod on volume detachment
+            autoDeletePodWhenVolumeDetachedUnexpectedly: true
+            # Replica auto-balance
+            replicaAutoBalance: best-effort
+            # Snapshot data integrity check
+            snapshotDataIntegrity: fast-check
+            snapshotDataIntegrityCronjob: "0 4 * * *"
+          persistence:
+            # Default StorageClass
+            defaultClass: true
+            defaultFsType: ext4
+            defaultClassReplicaCount: 3
+            reclaimPolicy: Delete
+            # Node selector for Longhorn Manager nodes
+          longhornManager:
+            nodeSelector:
+              storage-node: "true"
+            tolerations:
+              - key: "storage"
+                operator: "Equal"
+                value: "longhorn"
+                effect: "NoSchedule"
+          longhornDriver:
+            nodeSelector:
+              storage-node: "true"
+            tolerations:
+              - key: "storage"
+                operator: "Equal"
+                value: "longhorn"
+                effect: "NoSchedule"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: longhorn-system
