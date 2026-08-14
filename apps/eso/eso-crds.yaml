@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-2"
 spec:
-  project: bvault-project
+  project: default
   source:
     repoURL: https://github.com/external-secrets/external-secrets.git
     targetRevision: v2.9.0
