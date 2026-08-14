@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: yt-dlp-ingest-config
+  namespace: bvault-production
+data:
+  GATEWAY_URL: "http://gateway.bvault-production.svc.cluster.local:8080"

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: analysis-worker-config
+  namespace: bvault-production
+data:
+  RAW_STORE_ROOT: "/mnt/music-store/raw"
+  ARTIFACT_STORE_ROOT: "/mnt/music-store/artifacts"
+  LEASE_SECONDS: "300"
+  POLL_INTERVAL_MILLIS: "500"
+  DB_MAX_CONNECTIONS: "5"

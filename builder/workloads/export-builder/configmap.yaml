@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: export-builder-config
+  namespace: bvault-production
+data:
+  BIND_ADDR: "0.0.0.0:8081"
+  RAW_STORE_ROOT: "/mnt/music-store/raw"
+  ARTIFACT_STORE_ROOT: "/mnt/music-store/artifacts"
+  STAGING_ROOT: "/mnt/music-store/staging"
+  EXPORT_TTL_HOURS: "24"
+  DB_MAX_CONNECTIONS: "5"

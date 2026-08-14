@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analysis-worker
+  namespace: bvault-production
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: analysis-worker
+  template:
+    metadata:
+      labels:
+        app: analysis-worker
+    spec:
+      containers:
+      - name: analysis-worker
+        image: analysis-worker-image
+        envFrom:
+        - configMapRef:
+            name: analysis-worker-config
+        - secretRef:
+            name: postgres-secret
+        volumeMounts:
+        - name: music-store
+          mountPath: /mnt/music-store
+      volumes:
+      - name: music-store
+        persistentVolumeClaim:
+          claimName: music-store-pvc

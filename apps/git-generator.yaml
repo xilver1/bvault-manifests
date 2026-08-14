@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-addons
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      repoURL: https://github.com/xilver1/bvault-manifests.git
+      revision: HEAD
+      directories:
+      - path: builder/workloads/*
+  template:
+    metadata:
+      name: '{{.path.basename}}'
+    spec:
+      project: "bvault-production"
+      source:
+        repoURL: https://github.com/xilver1/bvault-manifests.git
+        targetRevision: HEAD
+        path: '{{.path.path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'bvault-production'
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true

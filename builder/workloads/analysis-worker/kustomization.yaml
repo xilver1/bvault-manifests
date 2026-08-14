@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - deployment.yaml
+  - configmap.yaml
+
+images:
+  - name: analysis-worker-image
+    newName: 854469103070.dkr.ecr.us-east-1.amazonaws.com/bvault_app
+    newTag: analysis-worker-318a50565e4b098e39dc6d88814ad6914950fbe2

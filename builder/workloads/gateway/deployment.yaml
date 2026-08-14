@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  namespace: bvault-production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+      - name: gateway
+        image: gateway-image
+        ports:
+        - containerPort: 8080
+          name: http
+        envFrom:
+        - configMapRef:
+            name: gateway-config
+        - secretRef:
+            name: postgres-secret
+        volumeMounts:
+        - name: music-store
+          mountPath: /mnt/music-store
+      volumes:
+      - name: music-store
+        persistentVolumeClaim:
+          claimName: music-store-pvc
