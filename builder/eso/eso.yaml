@@ -1,0 +1,102 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-secrets
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  project: bvault-project
+  source:
+    repoURL: https://charts.external-secrets.io
+    chart: external-secrets
+    targetRevision: 2.9.0
+    helm:
+      values: |
+        installCRDs: false
+
+        # Operator configuration
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 256Mi
+
+        # Webhook for validation
+        webhook:
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              memory: 128Mi
+
+        # Cert controller manages webhook certificates
+        certController:
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              memory: 128Mi
+
+        podSecurityContext:
+          fsGroup: 65532
+
+        extraVolumes:
+          - name: secrets-aws-volume
+            secret:
+              secretName: iamra-secret-bundle
+              defaultMode: 0440
+
+        extraContainers:
+          - name: aws-signing-helper
+            image: public.ecr.aws/rolesanywhere/credential-helper:1.8.4-amd64-2026.06.09.14.59
+            args:
+              - "serve"
+              - "--certificate"
+              - "/etc/secrets/aws/leaf-cert"
+              - "--private-key"
+              - "/etc/secrets/aws/leaf-key"
+              - "--intermediates"
+              - "/etc/secrets/aws/intermediate-ca-cert"
+              - "--trust-anchor-arn"
+              - "arn:aws:rolesanywhere:us-east-1:854469103070:trust-anchor/7f2b8a22-14a4-4cd0-8079-c12ed2b9729b"
+              - "--profile-arn"
+              - "arn:aws:rolesanywhere:us-east-1:854469103070:profile/3b0c4e5c-efc4-42ca-8df7-914fbe4cb397"
+              - "--role-arn"
+              - "arn:aws:iam::854469103070:role/lab-k8s-workload"
+              - "--port"
+              - "9911"
+            volumeMounts:
+              - name: secrets-aws-volume
+                mountPath: /etc/secrets/aws
+                readOnly: true
+            securityContext:
+              runAsUser: 65532
+              # anything else the read-only-rootfs interaction forces
+
+        extraEnv:
+          - name: AWS_EC2_METADATA_SERVICE_ENDPOINT
+            value: "http://127.0.0.1:9911/"
+
+        # Metrics for monitoring
+        serviceMonitor:
+          enabled: true
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: external-secrets
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
