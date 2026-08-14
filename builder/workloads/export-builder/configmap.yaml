@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: export-builder-config
-  namespace: bvault-production
+  namespace: bvault-prod
 data:
   BIND_ADDR: "0.0.0.0:8081"
   RAW_STORE_ROOT: "/mnt/music-store/raw"

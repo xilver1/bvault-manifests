@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: analysis-worker-config
-  namespace: bvault-production
+  namespace: bvault-prod
 data:
   RAW_STORE_ROOT: "/mnt/music-store/raw"
   ARTIFACT_STORE_ROOT: "/mnt/music-store/artifacts"

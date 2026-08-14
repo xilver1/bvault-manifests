@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: analysis-worker
-  namespace: bvault-production
+  namespace: bvault-prod
 spec:
   replicas: 2
   selector:

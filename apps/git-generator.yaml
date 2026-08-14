@@ -16,14 +16,14 @@ spec:
     metadata:
       name: '{{.path.basename}}'
     spec:
-      project: "bvault-production"
+      project: "bvault-project"
       source:
         repoURL: https://github.com/xilver1/bvault-manifests.git
         targetRevision: HEAD
         path: '{{.path.path}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: 'bvault-production'
+        namespace: 'bvault-prod'
       syncPolicy:
         syncOptions:
         - CreateNamespace=true
