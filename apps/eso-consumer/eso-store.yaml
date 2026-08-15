@@ -9,7 +9,6 @@ spec:
   provider:
     aws:
       service: ParameterStore
-      role: arn:aws:iam::854469103070:role/lab-k8s-workload
       region: us-east-1
 ---
 apiVersion: generators.external-secrets.io/v1alpha1
@@ -21,4 +20,3 @@ metadata:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
   region: us-east-1
-  role: arn:aws:iam::854469103070:role/lab-k8s-workload
