@@ -6,11 +6,12 @@ spec:
   capacity:
     storage: 2Ti
   accessModes:
-  - ReadWriteMany
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-hdd
-  hostPath:
-    path: /mnt/music-store
+  storageClassName: ""
+  nfs:
+    server: 192.168.0.190
+    path: /music-pool
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -19,8 +20,8 @@ metadata:
   namespace: bvault-prod
 spec:
   accessModes:
-  - ReadWriteMany
-  storageClassName: local-hdd
+    - ReadWriteMany
+  storageClassName: ""
   resources:
     requests:
       storage: 1.8Ti
