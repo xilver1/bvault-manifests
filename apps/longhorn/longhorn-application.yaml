@@ -7,7 +7,7 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-  project: default
+  project: bvault-project
   sources:
     - chart: longhorn
       repoURL: https://charts.longhorn.io/
