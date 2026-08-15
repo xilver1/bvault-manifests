@@ -13,21 +13,24 @@ spec:
       labels:
         app: export-builder
     spec:
+      runAsUser: 1001
+      runAsGroup: 1001
+      fsGroup: 1001
       containers:
-      - name: export-builder
-        image: export-builder-image
-        ports:
-        - containerPort: 8081
-          name: http
-        envFrom:
-        - configMapRef:
-            name: export-builder-config
-        - secretRef:
-            name: postgres-secret
-        volumeMounts:
-        - name: music-store
-          mountPath: /mnt/music-store
+        - name: export-builder
+          image: export-builder-image
+          ports:
+            - containerPort: 8081
+              name: http
+          envFrom:
+            - configMapRef:
+                name: export-builder-config
+            - secretRef:
+                name: postgres-secret
+          volumeMounts:
+            - name: music-store
+              mountPath: /mnt/music-store
       volumes:
-      - name: music-store
-        persistentVolumeClaim:
-          claimName: music-store-pvc
+        - name: music-store
+          persistentVolumeClaim:
+            claimName: music-store-pvc

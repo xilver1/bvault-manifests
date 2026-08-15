@@ -13,18 +13,21 @@ spec:
       labels:
         app: analysis-worker
     spec:
+      runAsUser: 1001
+      runAsGroup: 1001
+      fsGroup: 1001
       containers:
-      - name: analysis-worker
-        image: analysis-worker-image
-        envFrom:
-        - configMapRef:
-            name: analysis-worker-config
-        - secretRef:
-            name: postgres-secret
-        volumeMounts:
-        - name: music-store
-          mountPath: /mnt/music-store
+        - name: analysis-worker
+          image: analysis-worker-image
+          envFrom:
+            - configMapRef:
+                name: analysis-worker-config
+            - secretRef:
+                name: postgres-secret
+          volumeMounts:
+            - name: music-store
+              mountPath: /mnt/music-store
       volumes:
-      - name: music-store
-        persistentVolumeClaim:
-          claimName: music-store-pvc
+        - name: music-store
+          persistentVolumeClaim:
+            claimName: music-store-pvc
