@@ -24,3 +24,31 @@ spec:
                 name: yt-dlp-ingest-config
             - secretRef:
                 name: postgres-secret
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+        - name: pot-provider
+          image: brainicism/bgutil-ytdlp-pot-provider:latest
+          ports:
+            - containerPort: 4416
+              name: pot
+          readinessProbe:
+            tcpSocket:
+              port: 4416
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              memory: 384Mi
