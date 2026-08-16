@@ -14,11 +14,13 @@ spec:
         app: yt-dlp-ingest
     spec:
       containers:
-      - name: yt-dlp-ingest
-        image: yt-dlp-ingest-image
-        ports:
-        - containerPort: 8080
-          name: http
-        envFrom:
-        - configMapRef:
-            name: yt-dlp-ingest-config
+        - name: yt-dlp-ingest
+          image: yt-dlp-ingest-image
+          ports:
+            - containerPort: 8080
+              name: http
+          envFrom:
+            - configMapRef:
+                name: yt-dlp-ingest-config
+            - secretRef:
+                name: postgres-secret

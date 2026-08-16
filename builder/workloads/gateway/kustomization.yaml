@@ -5,6 +5,7 @@ resources:
   - deployment.yaml
   - configmap.yaml
   - service.yaml
+  - ingress.yaml
 
 images:
   - name: gateway-image

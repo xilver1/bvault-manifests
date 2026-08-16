@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: networking-stack
+  namespace: argocd
+spec:
+  project: bvault-project
+  source:
+    repoURL: https://github.com/xilver1/bvault-manifests.git
+    targetRevision: HEAD
+    path: networking
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
