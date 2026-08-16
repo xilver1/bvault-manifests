@@ -9,4 +9,4 @@ resources:
 images:
   - name: yt-dlp-ingest-image
     newName: 854469103070.dkr.ecr.us-east-1.amazonaws.com/bvault_app
-    newTag: yt-dlp-ingest-a0de6f85965b3c71cbdd8fad074fc861d9081533
+    newTag: yt-dlp-ingest-1479ff8d7c8436d3deb97bc2c18c2c84893f89c7
