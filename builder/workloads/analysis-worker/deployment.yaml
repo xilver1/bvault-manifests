@@ -13,9 +13,10 @@ spec:
       labels:
         app: analysis-worker
     spec:
-      runAsUser: 1001
-      runAsGroup: 1001
-      fsGroup: 1001
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
       containers:
         - name: analysis-worker
           image: analysis-worker-image
