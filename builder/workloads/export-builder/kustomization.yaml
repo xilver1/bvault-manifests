@@ -9,4 +9,4 @@ resources:
 images:
   - name: export-builder-image
     newName: 854469103070.dkr.ecr.us-east-1.amazonaws.com/bvault_app
-    newTag: export-builder-7c213f437fba867d5b184b36ba0877ea1b880af9
+    newTag: export-builder-beee73f1e3ec15e93c9e36b880ef489a375ae96f
