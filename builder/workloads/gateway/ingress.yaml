@@ -5,6 +5,9 @@ metadata:
   namespace: bvault-prod
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    # ingress-nginx defaults client_max_body_size to 1m, so audio uploads 413
+    # before reaching the gateway (which itself allows 200 MiB). Match it here.
+    nginx.ingress.kubernetes.io/proxy-body-size: "200m"
 spec:
   ingressClassName: nginx
   rules:
