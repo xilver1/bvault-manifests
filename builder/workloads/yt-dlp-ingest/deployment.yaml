@@ -32,10 +32,10 @@ spec:
             periodSeconds: 10
           resources:
             requests:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 500m
+              memory: 768Mi
             limits:
-              memory: 512Mi
+              memory: 768Mi
         - name: pot-provider
           image: brainicism/bgutil-ytdlp-pot-provider:latest
           ports:
