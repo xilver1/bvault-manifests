@@ -4,7 +4,7 @@ metadata:
   name: yt-dlp-ingest
   namespace: bvault-prod
 spec:
-  replicas: 3
+  replicas: 0
   selector:
     matchLabels:
       app: yt-dlp-ingest
