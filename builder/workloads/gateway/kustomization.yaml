@@ -10,4 +10,4 @@ resources:
 images:
   - name: gateway-image
     newName: 854469103070.dkr.ecr.us-east-1.amazonaws.com/bvault_app
-    newTag: gateway-03c8bf8bb987149a01f0f9963e03de32cb38aafd
+    newTag: gateway-f8e76ae78f52e09e6495853ae34fdc74d31f5147
