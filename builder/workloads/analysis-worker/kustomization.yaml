@@ -8,4 +8,4 @@ resources:
 images:
   - name: analysis-worker-image
     newName: 854469103070.dkr.ecr.us-east-1.amazonaws.com/bvault_app
-    newTag: analysis-worker-62ad092a97204708c0c1ee0fe2c774b37ef31395
+    newTag: analysis-worker-08440ac8c0aec5067b26a3e7ded72174e4f6e943
