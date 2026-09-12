@@ -9,4 +9,4 @@ data:
   # accepts works (DEBUG/INFO/WARNING/ERROR), case-insensitive.
   LOG_LEVEL: "INFO"
   GATEWAY_URL: "http://gateway.bvault-prod.svc.cluster.local:8080"
-  OTEL_EXPORTER_OTLP_ENDPOINT: "192.168.0.192:4318"
+  OTEL_EXPORTER_OTLP_ENDPOINT: "http://192.168.0.192:4318"

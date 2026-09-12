@@ -13,4 +13,4 @@ data:
   ARTIFACT_STORE_ROOT: "/mnt/music-store/artifacts"
   YT_DLP_SERVICE_URL: "http://yt-dlp-ingest.bvault-prod.svc.cluster.local:8080"
   SESSION_TTL_SECONDS: "2592000"
-  OTEL_EXPORTER_OTLP_ENDPOINT: "192.168.0.192:4318"
+  OTEL_EXPORTER_OTLP_ENDPOINT: "http://192.168.0.192:4318"
