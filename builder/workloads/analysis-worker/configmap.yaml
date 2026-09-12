@@ -4,6 +4,10 @@ metadata:
   name: analysis-worker-config
   namespace: bvault-prod
 data:
+  # Without this the services start with an empty EnvFilter, which disables
+  # every log line — Alloy then ships nothing to Loki. sqlx logs statements
+  # at debug, so `info` stays quiet per-query and still surfaces slow ones.
+  RUST_LOG: "info"
   RAW_STORE_ROOT: "/mnt/music-store/raw"
   ARTIFACT_STORE_ROOT: "/mnt/music-store/artifacts"
   LEASE_SECONDS: "300"
