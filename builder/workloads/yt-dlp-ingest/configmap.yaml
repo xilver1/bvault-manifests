@@ -4,4 +4,8 @@ metadata:
   name: yt-dlp-ingest-config
   namespace: bvault-prod
 data:
+  # Python service, so this is LOG_LEVEL rather than the Rust services'
+  # RUST_LOG. Read by logging.basicConfig at import; anything the stdlib
+  # accepts works (DEBUG/INFO/WARNING/ERROR), case-insensitive.
+  LOG_LEVEL: "INFO"
   GATEWAY_URL: "http://gateway.bvault-prod.svc.cluster.local:8080"
