@@ -20,6 +20,9 @@ spec:
       containers:
         - name: analysis-worker
           image: analysis-worker-image
+          ports:
+            - containerPort: 8090
+              name: health
           envFrom:
             - configMapRef:
                 name: analysis-worker-config
@@ -28,6 +31,18 @@ spec:
           volumeMounts:
             - name: music-store
               mountPath: /mnt/music-store
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: health
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: health
+            periodSeconds: 10
+            failureThreshold: 3
       volumes:
         - name: music-store
           persistentVolumeClaim:
