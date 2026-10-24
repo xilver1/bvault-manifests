@@ -28,6 +28,13 @@ spec:
                 name: export-builder-config
             - secretRef:
                 name: postgres-secret
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
           volumeMounts:
             - name: music-store
               mountPath: /mnt/music-store

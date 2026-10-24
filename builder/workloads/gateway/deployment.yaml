@@ -31,6 +31,12 @@ spec:
           volumeMounts:
             - name: music-store
               mountPath: /mnt/music-store
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
       volumes:
         - name: music-store
           persistentVolumeClaim:
