@@ -32,8 +32,8 @@ spec:
             periodSeconds: 10
           resources:
             requests:
-              cpu: 500m
-              memory: 768Mi
+              cpu: 300m
+              memory: 400Mi
             limits:
               memory: 768Mi
         - name: pot-provider
@@ -49,6 +49,6 @@ spec:
           resources:
             requests:
               cpu: 50m
-              memory: 128Mi
+              memory: 200Mi
             limits:
-              memory: 384Mi
+              memory: 400Mi
